@@ -9,5 +9,6 @@ require 'administrate_batch_actions/version'
 
 module AdministrateBatchActions
   class Engine < ::Rails::Engine
+    Administrate::Engine.add_javascript 'administrate_batch_actions/script'
   end
 end
