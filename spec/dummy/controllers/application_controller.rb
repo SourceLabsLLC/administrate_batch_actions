@@ -1,0 +1,2 @@
+class Administrate::ApplicationController
+end
