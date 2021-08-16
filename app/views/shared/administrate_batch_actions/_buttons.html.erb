@@ -1,6 +1,0 @@
-<% controller.methods.select { |m| m[/.+_batch_action$/] }.map do |batch_action| %>
-  <%= link_to t("administrate.actions.#{batch_action}"),
-        [batch_action.to_sym, namespace, page.resource_path.pluralize],
-        class: "button",
-        data: { batch_action_option: 'button' } %>
-<% end %>
