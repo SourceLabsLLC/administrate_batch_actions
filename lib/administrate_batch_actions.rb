@@ -4,10 +4,9 @@ require 'active_support/core_ext'
 require 'active_support/dependencies'
 require 'administrate/engine'
 
-# require 'administrate_batch_actions/router'
+require 'administrate_batch_actions/router'
 require 'administrate_batch_actions/helpers'
 require 'administrate_batch_actions/version'
-require 'administrate_batch_actions/routes'
 
 module AdministrateBatchActions
   class Engine < ::Rails::Engine
@@ -16,7 +15,7 @@ module AdministrateBatchActions
     initializer "administrate_batch_actions.engine" do |app|
       ActionView::Base.send :include, AdministrateBatchActions::Helpers
       # binding.pry
-      # AdministrateBatchActions::Router.new(Rails.application.routes.router).call
+      AdministrateBatchActions::Router.new(Rails.application.routes.router).call
     end
   end
 end
