@@ -21,10 +21,10 @@ RSpec.describe AdministrateBatchActions::Router do
 
     it 'calls the rails router to create routes' do
       expect(rails_router).to receive(:resources)
-        .with(:dummy, only: :none)
+        .with(:dummy)
         .and_yield
 
-      expect(rails_router).to receive(:get)
+      expect(rails_router).to receive(:post)
         .with(:dummy_batch_action, on: :collection)
 
       set_route
