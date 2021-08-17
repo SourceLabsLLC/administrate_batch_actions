@@ -25,8 +25,8 @@ module AdministrateBatchActions
     def register_route(controller, method_name)
       resource = controller.name.demodulize.underscore.delete_suffix('_controller')
 
-      rails_router.resources resource.to_sym, only: :none do
-        rails_router.get method_name.to_sym, on: :collection
+      rails_router.resources resource.to_sym do
+        rails_router.post method_name.to_sym, on: :collection
       end
     end
 
