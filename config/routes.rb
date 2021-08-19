@@ -1,4 +1,4 @@
-AdministrateBatchActions::Engine.routes.draw do
+Rails.application.routes.draw do
 
   def controllers_for(path)
     path ||= Rails.root.join('app', 'controllers', 'admin', '**/*.rb')
@@ -10,16 +10,18 @@ AdministrateBatchActions::Engine.routes.draw do
     ::Administrate::ApplicationController.descendants
   end
 
-  controllers_for(nil).each do |controller|
-    controller
-      .instance_methods
-      .select { |m| m[/.+_batch_action$/] }
-      .each do |method_name|
-        resource = controller.name.demodulize.underscore.delete_suffix('_controller')
+  namespace :admin do
+    controllers_for(nil).each do |controller|
+      controller
+        .instance_methods
+        .select { |m| m[/.+_batch_action$/] }
+        .each do |method_name|
+          resource = controller.name.demodulize.underscore.delete_suffix('_controller')
 
-        resources resource.to_sym, only: :none do
-          get method_name.to_sym, on: :collection
-        end
+          resources resource.to_sym do
+            post method_name.to_sym, on: :collection
+          end
+      end
     end
   end
 
