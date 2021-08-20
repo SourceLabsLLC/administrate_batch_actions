@@ -1,8 +1,8 @@
 # AdministrateBatchActions
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/administrate_batch_actions`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem allows you to quickly embed a UI on resources' list page, by using the UI, you are able to do batch actions, such as batch deletion or batch approval etc.
 
-TODO: Delete this and the text above, and describe your gem
+The helper addes checkboxes and batch action button which allows you to integrate some customized actions in `administrate` way.
 
 ## Installation
 
@@ -22,7 +22,37 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The gem introduces three helper methods below:
+```
+administrate_batch_actions_select_all() # renders Select All checkbox
+```
+```
+administrate_batch_actions_checkbox(resource.id) # individual row checkbox
+```
+```
+administrate_batch_actions_button(batch_action_name, target_handling_path) # batch action submit button
+```
+
+You need to create custom Administrate views and insert the helpers above.
+
+Afterwards-- define your custom controller actions named as `*_batch_action` e.g.:
+* `def delete_batch_action ;  ...; end`
+* `def approve_batch_action; ...; end`
+* etc
+
+The gem will auto-generate route entries for controller actions matches to this pattern. For instance-- if I have an action below:
+
+```
+def delete_batch_action
+  User.find(params[:batch_action_ids]).each(&:destroy)
+  redirect_to :admin_users, notice: "Successfully deleted #{params[:batch_action_ids].size} users"
+end
+```
+
+The gem will auto-generate the following route:
+```
+delete_batch_action_admin_users POST  /admin/users/delete_batch_action(.:format)  admin/users#delete_batch_action
+```
 
 ## Development
 
