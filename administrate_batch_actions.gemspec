@@ -7,8 +7,9 @@ Gem::Specification.new do |spec|
   spec.version       = AdministrateBatchActions::VERSION
   spec.authors       = ['Sourcelabs LLC']
   spec.email         = ['andrei@sourcelabs.io']
-
+  spec.homepage      = 'https://github.com/SourceLabsLLC/administrate-batch-actions'
   spec.summary       = %q{Batch Actions plugin for Administrate}
+  spec.description   = spec.summary
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
