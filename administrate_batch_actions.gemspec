@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Sourcelabs LLC']
   spec.email         = ['andrei@sourcelabs.io']
   spec.homepage      = 'https://github.com/SourceLabsLLC/administrate-batch-actions'
-  spec.summary       = %q{Batch Actions plugin for Administrate}
+  spec.summary       = 'Batch Actions plugin for Administrate'
   spec.description   = spec.summary
   spec.license       = 'MIT'
 
@@ -21,10 +21,8 @@ Gem::Specification.new do |spec|
   #     "public gem pushes."
   # end
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
