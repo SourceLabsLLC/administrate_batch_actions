@@ -1,8 +1,8 @@
 # AdministrateBatchActions
 
-This gem allows you to quickly embed a UI on resources' list page, by using the UI, you are able to do batch actions, such as batch deletion or batch approval etc.
+This plugin for [Administrate](https://github.com/thoughtbot/administrate) allows you to add batch/bulk actions to your Administrate resources index lists, such as batch deletion or batch approval, etc.
 
-The helper addes checkboxes and batch action button which allows you to integrate some customized actions in `administrate` way.
+The available helpers add individual checkboxes, a 'select all' checkbox and batch action buttons which allow you to integrate custom batch/bulk actions.
 
 ## Installation
 
@@ -16,7 +16,7 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Or install it yourself:
 
     $ gem install administrate_batch_actions
 
