@@ -22,24 +22,34 @@ Or install it yourself as:
 
 ## Usage
 
-It introduces three helpers as below:
+The gem introduces three helper methods below:
 ```
-administrate_batch_actions_select_all
-administrate_batch_actions_checkbox(resource.id)
-administrate_batch_actions_button(batch_action_name, target_handling_path)
+administrate_batch_actions_select_all() # renders Select All checkbox
 ```
-
-You need to create customized administrate's views, then enables UI and regarding functions by placing above helpers where you want.
-
-After doing that, you need to add customized action named as `*_batch_action`, this gem will auto-generate routes for actions with that pattern. For instance, if I have an action like below:
 ```
-    def delete_batch_action
-      User.find(params[:batch_action_ids]).each(&:destroy)
-      redirect_to :admin_users, notice: "Successfully deleted #{params[:batch_action_ids].size} users"
-    end
+administrate_batch_actions_checkbox(resource.id) # individual row checkbox
+```
+```
+administrate_batch_actions_button(batch_action_name, target_handling_path) # batch action submit button
 ```
 
-The auto-generated route is like:
+You need to create custom Administrate views and insert the helpers above.
+
+Afterwards-- define your custom controller actions named as `*_batch_action` e.g.:
+* `def delete_batch_action ;  ...; end`
+* `def approve_batch_action; ...; end`
+* etc
+
+The gem will auto-generate route entries for controller actions matches to this pattern. For instance-- if I have an action below:
+
+```
+def delete_batch_action
+  User.find(params[:batch_action_ids]).each(&:destroy)
+  redirect_to :admin_users, notice: "Successfully deleted #{params[:batch_action_ids].size} users"
+end
+```
+
+The gem will auto-generate the following route:
 ```
 delete_batch_action_admin_users POST  /admin/users/delete_batch_action(.:format)  admin/users#delete_batch_action
 ```
