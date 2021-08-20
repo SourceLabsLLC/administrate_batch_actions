@@ -1,4 +1,4 @@
-require './rails_helper'
+require 'rails_helper'
 
 RSpec.describe 'Routes', type: :routing do
   it 'has route to the batch action' do
