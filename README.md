@@ -26,12 +26,15 @@ The gem introduces three helper methods below:
 ```
 administrate_batch_actions_select_all() # renders Select All checkbox
 ```
+Insert the helper in between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L23-L24)
 ```
 administrate_batch_actions_checkbox(resource.id) # individual row checkbox
 ```
+Insert the helper between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L61-L62)
 ```
 administrate_batch_actions_button(batch_action_name, target_handling_path) # batch action submit button
 ```
+Insert the helper between the 2 lines in [_index.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/index.html.erb#L34)
 
 You need to create custom Administrate views and insert the helpers above.
 
