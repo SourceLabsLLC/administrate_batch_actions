@@ -4,6 +4,9 @@ This plugin for [Administrate](https://github.com/thoughtbot/administrate) allow
 
 The available helpers add individual checkboxes, a 'select all' checkbox and batch action buttons which allow you to integrate custom batch/bulk actions.
 
+## Demo
+![Aug-21-2021 21-56-48](https://user-images.githubusercontent.com/541665/130339415-c69f4b53-e248-449a-8764-7a854c5b0dcb.gif)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -24,15 +27,17 @@ Or install it yourself:
 
 The gem introduces three helper methods below:
 ```
-administrate_batch_actions_select_all() # renders Select All checkbox
+<%= administrate_batch_actions_select_all() %> # renders Select All checkbox
 ```
-Insert the helper in between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L23-L24)
+Insert the helper between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L23-L24)
+
 ```
-administrate_batch_actions_checkbox(resource.id) # individual row checkbox
+<%= administrate_batch_actions_checkbox(resource.id) %> # individual row checkbox
 ```
 Insert the helper between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L61-L62)
+
 ```
-administrate_batch_actions_button(batch_action_name, target_handling_path) # batch action submit button
+<%= administrate_batch_actions_button(batch_action_name, target_handling_path) %> # batch action submit button
 ```
 Insert the helper between the 2 lines in [_index.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/index.html.erb#L34)
 
@@ -43,7 +48,7 @@ Afterwards-- define your custom controller actions named as `*_batch_action` e.g
 * `def approve_batch_action; ...; end`
 * etc
 
-The gem will auto-generate route entries for controller actions matches to this pattern. For instance-- if I have an action below:
+The gem will auto-generate route entries for controller actions that match this pattern. For instance-- if I have an action below:
 
 ```
 def delete_batch_action
@@ -56,6 +61,7 @@ The gem will auto-generate the following route:
 ```
 delete_batch_action_admin_users POST  /admin/users/delete_batch_action(.:format)  admin/users#delete_batch_action
 ```
+So you can call the method to display the button like so: `<%= administrate_batch_actions_button('Delete Selected, delete_batch_action_admin_users_path)`
 
 ## Development
 
