@@ -37,7 +37,13 @@ Insert the helper between the 2 lines in [_collection.html.erb](https://github.c
 Insert the helper between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L61-L62)
 
 ```
-<%= administrate_batch_actions_button(batch_action_name, target_handling_path) %> # batch action submit button
+<%=
+  administrate_batch_actions_button(
+    batch_action_name,
+    target_handling_path,
+    { class: '', confirm: '' }
+  )
+%> # batch action submit button with optional `class` and `confirm` message params
 ```
 Insert the helper between the 2 lines in [_index.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/index.html.erb#L34)
 
