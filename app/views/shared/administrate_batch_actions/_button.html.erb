@@ -1,1 +1,1 @@
-<%= link_to name, path, class: "button", data: { batch_action_option: 'button', confirm: 'Are you sure to do this?' }, method: :post %>
+<%= link_to name, path, class: html_options[:class], data: { batch_action_option: 'button', confirm: html_options[:confirm] }, method: :post %>
