@@ -3,6 +3,17 @@ var checkboxes = document.querySelectorAll("[data-batch-action-option='checkbox'
 var selectAllCheckboxes = document.querySelector("[data-batch-action-option='select_all']");
 
 if (selectAllCheckboxes && checkboxes && buttons) {
+
+  window.onpageshow = function(event) {
+    if (selectedItemIds()) {
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+
+      selectAllCheckboxes.checked = false;
+    }
+  };
+
   selectAllCheckboxes.addEventListener('click', function(){
     checkboxes.forEach(function(checkbox) {
       checkbox.checked = selectAllCheckboxes.checked;
