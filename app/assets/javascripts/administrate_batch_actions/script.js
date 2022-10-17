@@ -54,10 +54,12 @@ function checkAndToggleActionButtons() {
   if (selectedItemIds()) {
     buttons.forEach(function(button){
       button.classList.remove('disabled');
+      button.removeAttribute('disabled');
     });
   } else {
     buttons.forEach(function(button){
       button.classList.add('disabled');
+      button.setAttribute('disabled', 'disabled');
     });
   }
 }
