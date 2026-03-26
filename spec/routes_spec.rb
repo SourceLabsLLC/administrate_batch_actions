@@ -4,7 +4,6 @@ RSpec.describe 'Routes', type: :routing do
   it 'has route to the batch action' do
     expect(admin_dummy_batch_action_dummy_path).to eq('/admin/dummy/dummy_batch_action')
     expect(post: admin_dummy_batch_action_dummy_path).to route_to(
-
       controller: 'admin/dummy',
       action: 'dummy_batch_action'
     )
