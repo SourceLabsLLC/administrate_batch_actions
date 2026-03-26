@@ -6,5 +6,5 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
 group :test do
-  gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+  gem 'tzinfo-data', platforms: %i[windows]
 end

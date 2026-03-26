@@ -1,10 +1,14 @@
 # AdministrateBatchActions
 
+[![RSpec](https://github.com/SourceLabsLLC/administrate_batch_actions/actions/workflows/specs.yml/badge.svg)](https://github.com/SourceLabsLLC/administrate_batch_actions/actions/workflows/specs.yml)
+[![Gem Version](https://badge.fury.io/rb/administrate_batch_actions.svg)](https://badge.fury.io/rb/administrate_batch_actions)
+
 This plugin for [Administrate](https://github.com/thoughtbot/administrate) allows you to add batch/bulk actions to your Administrate resources index lists, such as batch deletion or batch approval, etc.
 
 The available helpers add individual checkboxes, a 'select all' checkbox and batch action buttons which allow you to integrate custom batch/bulk actions.
 
 ## Demo
+
 ![Aug-21-2021 21-56-48](https://user-images.githubusercontent.com/541665/130339415-c69f4b53-e248-449a-8764-7a854c5b0dcb.gif)
 
 ## Installation
@@ -26,15 +30,18 @@ Or install it yourself:
 ## Usage
 
 The gem introduces three helper methods below:
+
 ```
 <%= administrate_batch_actions_select_all() %> # renders Select All checkbox
 ```
-Insert the helper between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L23-L24)
+
+Insert the helper between the 2 lines in [\_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v1.0.0/app/views/administrate/application/_collection.html.erb#L23-L24)
 
 ```
 <%= administrate_batch_actions_checkbox(resource.id) %> # individual row checkbox
 ```
-Insert the helper between the 2 lines in [_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/_collection.html.erb#L61-L62)
+
+Insert the helper between the 2 lines in [\_collection.html.erb](https://github.com/thoughtbot/administrate/blob/v1.0.0/app/views/administrate/application/_collection.html.erb#L74-L75)
 
 ```
 <%=
@@ -45,14 +52,16 @@ Insert the helper between the 2 lines in [_collection.html.erb](https://github.c
   )
 %> # batch action submit button with optional `class` and `confirm` message params
 ```
-Insert the helper between the 2 lines in [_index.html.erb](https://github.com/thoughtbot/administrate/blob/v0.16.0/app/views/administrate/application/index.html.erb#L34)
+
+Insert the helper between the 2 lines in [\_index.html.erb](https://github.com/thoughtbot/administrate/blob/v1.0.0/app/views/administrate/application/_index_header.html.erb#L38)
 
 You need to create custom Administrate views and insert the helpers above.
 
 Afterwards-- define your custom controller actions named as `*_batch_action` e.g.:
-* `def delete_batch_action ;  ...; end`
-* `def approve_batch_action; ...; end`
-* etc
+
+- `def delete_batch_action ;  ...; end`
+- `def approve_batch_action; ...; end`
+- etc
 
 The gem will auto-generate route entries for controller actions that match this pattern. For instance-- if I have an action below:
 
@@ -64,9 +73,11 @@ end
 ```
 
 The gem will auto-generate the following route:
+
 ```
 delete_batch_action_admin_users POST  /admin/users/delete_batch_action(.:format)  admin/users#delete_batch_action
 ```
+
 So you can call the method to display the button like so: `<%= administrate_batch_actions_button('Delete Selected, delete_batch_action_admin_users_path)`
 
 ## Development
