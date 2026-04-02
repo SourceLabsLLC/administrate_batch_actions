@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         prefixless_controller_path = controller_path.delete_prefix('admin/')
 
         scope path: :admin, as: :admin do
-          post "#{prefixless_controller_path}/#{method_name}",
+          post "administrate_batch_actions/#{prefixless_controller_path}/#{method_name}",
             to: "#{controller_path}##{method_name}",
             as: "#{method_name}_#{prefixless_controller_path}"
         end
