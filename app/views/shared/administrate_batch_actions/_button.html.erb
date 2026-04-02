@@ -1,1 +1,7 @@
-<%= link_to name, path, class: "btn disabled #{html_options[:class]}", data: { batch_action_option: 'button', confirm: html_options[:confirm] }, method: :post %>
+<%= button_to path,
+  class: "btn #{html_options[:class]}",
+  data: { batch_action_option: 'button', confirm: html_options[:confirm] },
+  method: :post,
+  disabled: true do %>
+  <%= name %>
+<% end%>
