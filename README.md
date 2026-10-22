@@ -46,12 +46,14 @@ Insert the helper between the 2 lines in [\_collection.html.erb](https://github.
 ```
 <%=
   administrate_batch_actions_button(
-    batch_action_name,
-    target_handling_path,
+    'Delete Selected',                    # button label (any string)
+    admin_delete_batch_action_users_path, # route generated for your `*_batch_action` method
     { class: '', confirm: '' }
   )
 %> # batch action submit button with optional `class` and `confirm` message params
 ```
+
+The first argument is just the button's label: pass a string, not the name of the controller method.
 
 Insert the helper between the 2 lines in [\_index.html.erb](https://github.com/thoughtbot/administrate/blob/v1.0.0/app/views/administrate/application/_index_header.html.erb#L38)
 
@@ -75,10 +77,24 @@ end
 The gem will auto-generate the following route:
 
 ```
-delete_batch_action_admin_users POST  /admin/users/delete_batch_action(.:format)  admin/users#delete_batch_action
+admin_delete_batch_action_users POST  /admin/administrate_batch_actions/users/delete_batch_action(.:format)  admin/users#delete_batch_action
 ```
 
-So you can call the method to display the button like so: `<%= administrate_batch_actions_button('Delete Selected, delete_batch_action_admin_users_path)`
+So you can call the method to display the button like so: `<%= administrate_batch_actions_button('Delete Selected', admin_delete_batch_action_users_path) %>`
+
+Nested controllers are supported too: `Admin::Reports::UsersController` gets `admin_delete_batch_action_reports_users_path`.
+
+### Custom namespace
+
+By default the gem looks for controllers in `app/controllers/admin`. If your Administrate dashboards live under a different namespace, set it in `config/initializers/administrate_batch_actions.rb`:
+
+```ruby
+AdministrateBatchActions.namespace = :admin_panel
+# or several namespaces
+AdministrateBatchActions.namespace = [:admin, :backoffice]
+```
+
+Routes are prefixed with their namespace, e.g. `Backoffice::UsersController#delete_batch_action` gets `backoffice_delete_batch_action_users_path`.
 
 ## Development
 

@@ -6,7 +6,7 @@ const init = function() {
   if (selectAllCheckboxes && checkboxes && buttons) {
 
     window.onpageshow = function(event) {
-      if (selectedItemIds()) {
+      if (selectedIds().length > 0) {
         checkboxes.forEach(function(checkbox) {
           checkbox.checked = false;
         });
@@ -24,8 +24,18 @@ const init = function() {
     });
 
     buttons.forEach(function(button){
+      var originalHref = button.getAttribute('href');
+
       button.addEventListener('click', function(event){
-        button.href += '?' + selectedItemIds()
+        // Rebuild from the original href so existing query params are kept
+        // and repeated clicks (e.g. a cancelled confirm) don't append twice.
+        var url = new URL(originalHref, window.location.href);
+
+        selectedIds().forEach(function(id) {
+          url.searchParams.append('batch_action_ids[]', id);
+        });
+
+        button.href = url.toString();
       });
     });
 
@@ -42,17 +52,16 @@ const init = function() {
     })
   }
 
-  function selectedItemIds() {
-    var ids = Array.prototype.filter.call(checkboxes, function(checkbox) {
-          if (checkbox.checked) { return checkbox }
-        }).map(function(checkbox) {
-          return 'batch_action_ids[]=' + checkbox.value
-        }).join('&');
-    return ids;
+  function selectedIds() {
+    return Array.prototype.filter.call(checkboxes, function(checkbox) {
+      return checkbox.checked;
+    }).map(function(checkbox) {
+      return checkbox.value;
+    });
   }
 
   function checkAndToggleActionButtons() {
-    if (selectedItemIds()) {
+    if (selectedIds().length > 0) {
       buttons.forEach(function(button){
         button.classList.remove('disabled');
         button.removeAttribute('disabled');

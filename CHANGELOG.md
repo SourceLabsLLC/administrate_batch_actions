@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- `AdministrateBatchActions.namespace` setting to generate routes for controllers outside `app/controllers/admin` (#11)
+
+### Fixed
+- Batch action routes are scoped under the admin namespace again (#42, #47)
+- Batch action routes no longer collide with resource routes such as `#show` (#49)
+- Batch action buttons keep existing query params in their URL, and repeated clicks no longer append duplicate ids (#45)
+- Clarified in the README that the button label is a string (#12)
+
+### Changed
+- Batch action routes are now `POST /<namespace>/administrate_batch_actions/<controller>/<action>`, named `<namespace>_<action>_<controller>`, e.g. `admin_delete_batch_action_users_path`
+
 ## [0.4.0] - 2026-03-26
 
 ### Added

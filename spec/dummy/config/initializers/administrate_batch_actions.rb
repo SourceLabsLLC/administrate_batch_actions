@@ -1,0 +1,1 @@
+AdministrateBatchActions.namespace = [:admin, :backoffice]
