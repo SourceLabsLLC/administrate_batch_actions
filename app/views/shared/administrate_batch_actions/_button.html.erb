@@ -1,7 +1,8 @@
 <%= button_to path,
   class: "btn #{html_options[:class]}",
-  data: { batch_action_option: 'button', confirm: html_options[:confirm] },
+  data: { batch_action_option: 'button', batch_action_confirm: html_options[:confirm].presence },
+  form: { data: { turbo: false } },
   method: :post,
   disabled: true do %>
   <%= name %>
-<% end%>
+<% end %>

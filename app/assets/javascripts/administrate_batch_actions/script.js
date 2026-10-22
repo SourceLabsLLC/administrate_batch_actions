@@ -6,9 +6,6 @@ const init = function () {
   var buttons = document.querySelectorAll(
     "[data-batch-action-option='button']",
   );
-  const forms = document.querySelectorAll(
-    "form:has([data-batch-action-option='button'])",
-  );
   var checkboxes = document.querySelectorAll(
     "[data-batch-action-option='checkbox']",
   );
@@ -17,14 +14,17 @@ const init = function () {
   );
 
   if (selectAllCheckboxes && checkboxes && buttons) {
+    // Reset selections restored by the browser's back/forward cache
     window.onpageshow = function (event) {
-      if (selectedItemIds() && selectedItemIds().length === 0) {
+      if (selectedItemIds().length > 0) {
         checkboxes.forEach(function (checkbox) {
           checkbox.checked = false;
         });
 
         selectAllCheckboxes.checked = false;
       }
+
+      checkAndToggleActionButtons();
     };
 
     if (!isBoundElement(boundSelectAllCheckboxes, selectAllCheckboxes)) {
@@ -39,29 +39,34 @@ const init = function () {
       });
     }
 
-    forms.forEach(function (form) {
-      if (isBoundElement(boundForms, form)) return;
+    buttons.forEach(function (button) {
+      var form = button.form;
+      if (!form || isBoundElement(boundForms, form)) return;
       boundForms.add(form);
 
-      const confirmMessage =
-        form.querySelector("[data-confirm]")?.dataset?.confirm ||
-        "Are you sure you want to submit this form?";
-
       form.addEventListener("submit", function (event) {
-        event.preventDefault();
+        var confirmMessage = button.dataset.batchActionConfirm;
 
-        if (confirm(confirmMessage) === true) {
-          selectedItemIds().forEach(function (id) {
-            const hiddenInput = document.createElement("input");
-            hiddenInput.type = "hidden";
-            hiddenInput.name = "batch_action_ids[]";
-            hiddenInput.value = id;
-            form.appendChild(hiddenInput);
-          });
-          form.submit();
-        } else {
+        if (confirmMessage && confirm(confirmMessage) !== true) {
+          event.preventDefault();
           return;
         }
+
+        // Replace ids from a previous submission (e.g. after navigating back)
+        form
+          .querySelectorAll("[data-batch-action-option='hidden_id']")
+          .forEach(function (hiddenInput) {
+            hiddenInput.remove();
+          });
+
+        selectedItemIds().forEach(function (id) {
+          var hiddenInput = document.createElement("input");
+          hiddenInput.type = "hidden";
+          hiddenInput.name = "batch_action_ids[]";
+          hiddenInput.value = id;
+          hiddenInput.dataset.batchActionOption = "hidden_id";
+          form.appendChild(hiddenInput);
+        });
       });
     });
 
@@ -84,28 +89,21 @@ const init = function () {
   }
 
   function selectedItemIds() {
-    var ids = Array.prototype.filter
+    return Array.prototype.filter
       .call(checkboxes, function (checkbox) {
-        if (checkbox.checked) {
-          return checkbox;
-        }
+        return checkbox.checked;
       })
       .map(function (checkbox) {
         return checkbox.value;
       });
-    return ids;
   }
 
   function checkAndToggleActionButtons() {
-    if (selectedItemIds() && selectedItemIds().length > 0) {
-      buttons.forEach(function (button) {
-        button.disabled = false;
-      });
-    } else {
-      buttons.forEach(function (button) {
-        button.disabled = true;
-      });
-    }
+    var disabled = selectedItemIds().length === 0;
+
+    buttons.forEach(function (button) {
+      button.disabled = disabled;
+    });
   }
 
   function isBoundElement(boundElement, incomingElement) {

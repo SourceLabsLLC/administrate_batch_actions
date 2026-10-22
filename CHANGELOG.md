@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Clarified in the README that the button label is a string (#12)
 
 ### Changed
+- Batch action buttons are now `button_to` forms that are truly disabled until rows are selected (#48)
 - Batch action routes are now `POST /<namespace>/administrate_batch_actions/<controller>/<action>`, named `<namespace>_<action>_<controller>`, e.g. `admin_delete_batch_action_users_path`
 
 ## [0.4.0] - 2026-03-26
