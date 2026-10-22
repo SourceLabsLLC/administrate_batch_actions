@@ -1,24 +1,29 @@
 Rails.application.routes.draw do
 
-  def controllers_for(path)
-    path ||= Rails.root.join('app', 'controllers', 'admin', '**/*.rb')
-
-    Dir[path].each do |file|
-      require_dependency file
+  def controllers_for(namespaces)
+    Array(namespaces).each do |namespace|
+      Dir[Rails.root.join('app', 'controllers', namespace.to_s, '**', '*.rb')].sort.each do |file|
+        require_dependency file
+      end
     end
 
-    ::Administrate::ApplicationController.descendants
+    ::Administrate::ApplicationController.descendants.uniq
   end
 
-  controllers_for(nil).each do |controller|
+  namespaces = Array(AdministrateBatchActions.namespace).map(&:to_s)
+
+  controllers_for(namespaces).each do |controller|
+    controller_path = controller.controller_path
+    namespace = namespaces.find { |ns| controller_path.start_with?("#{ns}/") }
+    next unless namespace
+
     controller
       .action_methods
       .select { |m| m.end_with?('_batch_action') }
       .each do |method_name|
-        controller_path = controller.controller_path
-        prefixless_controller_path = controller_path.delete_prefix('admin/')
+        prefixless_controller_path = controller_path.delete_prefix("#{namespace}/")
 
-        scope path: :admin, as: :admin do
+        scope path: namespace, as: namespace do
           post "administrate_batch_actions/#{prefixless_controller_path}/#{method_name}",
             to: "#{controller_path}##{method_name}",
             as: "#{method_name}_#{prefixless_controller_path}"

@@ -16,4 +16,12 @@ RSpec.describe 'Routes', type: :routing do
       action: 'my_batch_action'
     )
   end
+
+  it 'has route to the batch action in a custom namespace' do
+    expect(backoffice_archive_batch_action_widgets_path).to eq('/backoffice/administrate_batch_actions/widgets/archive_batch_action')
+    expect(post: backoffice_archive_batch_action_widgets_path).to route_to(
+      controller: 'backoffice/widgets',
+      action: 'archive_batch_action'
+    )
+  end
 end
