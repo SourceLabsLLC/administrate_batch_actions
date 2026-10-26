@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 - Clarified in the README that the button label is a string (#12)
 
 ### Changed
+- Requires Ruby 3.2+, Rails 7.1+ and Administrate 1.0+, now tested on Ruby 3.2–4.0 and Rails 7.1–8.1
+- No longer depends on `sprockets-rails`, so Propshaft apps don't get Sprockets installed; the script works with either pipeline
+- The button helper keeps its default `button` class when other options such as `confirm:` are passed
+- The script no longer defines global variables, which could collide with other scripts on the page
+- Helpers are included through `ActiveSupport.on_load(:action_view)`, so ActionView isn't loaded early
+- Controllers are loaded for route generation through Zeitwerk instead of `require_dependency`
 - Batch action buttons are now `button_to` forms that are truly disabled until rows are selected (#48)
 - Batch action routes are now `POST /<namespace>/administrate_batch_actions/<controller>/<action>`, named `<namespace>_<action>_<controller>`, e.g. `admin_delete_batch_action_users_path`
 

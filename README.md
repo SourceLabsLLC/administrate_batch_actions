@@ -11,6 +11,13 @@ The available helpers add individual checkboxes, a 'select all' checkbox and bat
 
 ![Aug-21-2021 21-56-48](https://user-images.githubusercontent.com/541665/130339415-c69f4b53-e248-449a-8764-7a854c5b0dcb.gif)
 
+## Requirements
+
+- Ruby 3.2+
+- Rails 7.1+
+- Administrate 1.0+
+- Propshaft or Sprockets. The script is added to Administrate's layout automatically with either asset pipeline.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -98,7 +105,13 @@ Routes are prefixed with their namespace, e.g. `Backoffice::UsersController#dele
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rake spec` to run the tests. The system specs drive a headless Chrome through [Cuprite](https://github.com/rubycdp/cuprite), so Chrome needs to be installed. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+The tests run against the latest Rails by default. To test another version, set `RAILS_VERSION` (Rails 7.x uses Sprockets, Rails 8 uses Propshaft):
+
+    $ rm -f Gemfile.lock
+    $ RAILS_VERSION=7.2 bundle install
+    $ RAILS_VERSION=7.2 bundle exec rake spec
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 

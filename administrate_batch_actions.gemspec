@@ -1,38 +1,27 @@
-lib = File.expand_path("../lib", __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'administrate_batch_actions/version'
+require_relative 'lib/administrate_batch_actions/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'administrate_batch_actions'
   spec.version       = AdministrateBatchActions::VERSION
   spec.authors       = ['Sourcelabs LLC']
   spec.email         = ['andrei@sourcelabs.io']
-  spec.homepage      = 'https://github.com/SourceLabsLLC/administrate-batch-actions'
+  spec.homepage      = 'https://github.com/SourceLabsLLC/administrate_batch_actions'
   spec.summary       = 'Batch Actions plugin for Administrate'
-  spec.description   = spec.summary
+  spec.description   = 'Adds checkboxes, a "select all" checkbox and batch action buttons to Administrate index pages.'
   spec.license       = 'MIT'
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  # if spec.respond_to?(:metadata)
-  #   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  # else
-  #   raise "RubyGems 2.0 or newer is required to protect against " \
-  #     "public gem pushes."
-  # end
+  spec.required_ruby_version = '>= 3.2'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
-  end
-  spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.metadata = {
+    'source_code_uri' => spec.homepage,
+    'changelog_uri' => "#{spec.homepage}/blob/main/CHANGELOG.md",
+    'bug_tracker_uri' => "#{spec.homepage}/issues",
+    'rubygems_mfa_required' => 'true'
+  }
+
+  spec.files = Dir['{app,config,lib}/**/*', 'CHANGELOG.md', 'LICENSE.txt', 'README.md']
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rspec-rails', '~> 3.0'
-  spec.add_development_dependency 'pry'
-  spec.add_dependency 'sprockets-rails'
-  spec.add_dependency 'administrate'
-  spec.add_dependency 'rails', '>= 5.2'
+  spec.add_dependency 'administrate', '>= 1.0'
+  spec.add_dependency 'rails', '>= 7.1'
 end
