@@ -9,17 +9,35 @@ on:
     branches:
       - "*"
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Ruby ${{ matrix.ruby }}
+    name: Ruby ${{ matrix.ruby }} / Rails ${{ matrix.rails }}
     strategy:
+      fail-fast: false
       matrix:
         ruby:
-          - "3.4.6"
+          - "3.2"
+          - "3.3"
+          - "3.4"
+          - "4.0"
+        rails:
+          - "7.1"
+          - "7.2"
+          - "8.0"
+          - "8.1"
+    env:
+      RAILS_VERSION: ${{ matrix.rails }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -27,3 +45,10 @@ jobs:
           bundler-cache: true
       - name: Run the default task
         run: bundle exec rake
+      - name: Upload system spec screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-ruby-${{ matrix.ruby }}-rails-${{ matrix.rails }}
+          path: spec/dummy/tmp/capybara
+          if-no-files-found: ignore

@@ -2,9 +2,8 @@ Rails.application.routes.draw do
 
   def controllers_for(namespaces)
     Array(namespaces).each do |namespace|
-      Dir[Rails.root.join('app', 'controllers', namespace.to_s, '**', '*.rb')].sort.each do |file|
-        require_dependency file
-      end
+      path = Rails.root.join('app', 'controllers', namespace.to_s)
+      Rails.autoloaders.main.eager_load_dir(path) if path.directory?
     end
 
     ::Administrate::ApplicationController.descendants.uniq

@@ -1,7 +1,6 @@
 require 'rails'
 require 'active_support'
 require 'active_support/core_ext'
-require 'active_support/dependencies'
 require 'administrate/engine'
 
 require 'administrate_batch_actions/helpers'
@@ -13,16 +12,21 @@ module AdministrateBatchActions
   mattr_accessor :namespace, default: :admin
 
   class Engine < ::Rails::Engine
+    # Propshaft serves every engine asset automatically; Sprockets needs it listed
     initializer "administrate_batch_actions.assets.precompile" do |app|
-      app.config.assets.precompile += [
-        "administrate_batch_actions/script.js"
-      ]
+      if defined?(Sprockets::Railtie)
+        app.config.assets.precompile += [
+          "administrate_batch_actions/script.js"
+        ]
+      end
     end
 
     Administrate::Engine.add_javascript 'administrate_batch_actions/script'
 
-    initializer "administrate_batch_actions.engine" do |app|
-      ActionView::Base.send :include, AdministrateBatchActions::Helpers
+    initializer "administrate_batch_actions.helpers" do
+      ActiveSupport.on_load(:action_view) do
+        include AdministrateBatchActions::Helpers
+      end
     end
   end
 end

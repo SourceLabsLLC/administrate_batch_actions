@@ -10,3 +10,13 @@
 # rspec failure tracking
 .rspec_status
 .DS_Store
+
+# built gems
+*.gem
+
+# resolved per RAILS_VERSION, see Gemfile
+/Gemfile.lock
+
+# dummy app runtime files
+/spec/dummy/tmp/
+/spec/dummy/log/

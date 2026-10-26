@@ -1,0 +1,13 @@
+<%= administrate_batch_actions_button('Delete', admin_dummy_batch_action_dummy_path(scope: 'active'), confirm: 'Are you sure?') %>
+<%= administrate_batch_actions_button('Archive', backoffice_archive_batch_action_widgets_path) %>
+
+<table>
+  <thead>
+    <tr><%= administrate_batch_actions_select_all %></tr>
+  </thead>
+  <tbody>
+    <% [1, 2, 3].each do |id| %>
+      <tr><%= administrate_batch_actions_checkbox(id) %></tr>
+    <% end %>
+  </tbody>
+</table>
