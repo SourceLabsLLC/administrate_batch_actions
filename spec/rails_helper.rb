@@ -10,6 +10,12 @@ Capybara.server = :puma, { Silent: true }
 
 RSpec.configure do |config|
   config.before(:each, type: :system) do
-    driven_by :cuprite, options: { headless: true, js_errors: true }
+    # Chrome can be slow to start on a cold CI runner
+    driven_by :cuprite, options: {
+      headless: true,
+      js_errors: true,
+      process_timeout: 30,
+      browser_options: ENV['CI'] ? { 'no-sandbox' => nil } : {}
+    }
   end
 end
